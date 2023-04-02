@@ -1,11 +1,13 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -17,6 +19,7 @@ public class MyGame extends Game {
 
 	SpriteBatch batch;
 	OrthographicCamera camera;
+	Vector3 touch;
 	World world;
 	Box2DDebugRenderer debugRenderer;
 
@@ -31,6 +34,7 @@ public class MyGame extends Game {
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, WIDTH, HEIGHT);
+		touch = new Vector3();
 		world = new World(new Vector2(0, -10), true);
 		debugRenderer = new Box2DDebugRenderer();
 
@@ -38,7 +42,7 @@ public class MyGame extends Game {
 		floor = new StaticBody(world, WIDTH/2, 0.2f, WIDTH, 0.2f);
 		wallLeft = new StaticBody(world, 0.5f, HEIGHT/2, 0.2f, HEIGHT);
 		wallRight = new StaticBody(world, WIDTH-0.5f, HEIGHT/2, 0.2f, HEIGHT);
-		platform = new KinematicBody(world, WIDTH/2, 2, 2, 1);
+		//platform = new KinematicBody(world, WIDTH/2, 2, 2, 1);
 		for (int i = 0; i < 50; i++) {
 			balls.add(new DynamicBody(world, WIDTH/2+ MathUtils.random(-0.1f, 0.1f), HEIGHT*2+i, 0.4f));
 		}
@@ -46,7 +50,16 @@ public class MyGame extends Game {
 
 	@Override
 	public void render () {
-		platform.move();
+		if(Gdx.input.justTouched()){
+			touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+			camera.unproject(touch);
+			for (int i = 0; i < 50; i++) {
+				if(balls.get(i).hit(touch.x, touch.y)) {
+					balls.get(i).body.applyLinearImpulse(0, 2f, balls.get(i).getX(), balls.get(i).getY(), true);
+				}
+			}
+		}
+		//platform.move();
 		ScreenUtils.clear(0, 0, 0, 1);
 		debugRenderer.render(world, camera.combined);
 		/*camera.update();

@@ -23,6 +23,7 @@ public class KinematicBody {
         body.createFixture(box, 0.0f);
         box.dispose();
         body.setLinearVelocity(1, 0);
+        body.setAngularVelocity(-2);
     }
 
     void move() {
