@@ -9,7 +9,7 @@ import com.badlogic.gdx.physics.box2d.World;
 public class Wall {
     Wall(World world, float x, float y, float width, float height){
         BodyDef bodyDef = new BodyDef();
-        //bodyDef.type = BodyDef.BodyType.StaticBody;
+        bodyDef.type = BodyDef.BodyType.StaticBody;
         bodyDef.position.set(new Vector2(x, y));
 
         Body body = world.createBody(bodyDef);
