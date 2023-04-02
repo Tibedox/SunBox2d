@@ -24,6 +24,7 @@ public class MyGame extends Game {
 
 	StaticBody wallLeft, wallRight, floor;
 	ArrayList<DynamicBody> balls = new ArrayList<>();
+	KinematicBody platform;
 	
 	@Override
 	public void create () {
@@ -35,15 +36,17 @@ public class MyGame extends Game {
 
 		//img = new Texture("badlogic.jpg");
 		floor = new StaticBody(world, WIDTH/2, 0.2f, WIDTH, 0.2f);
-		wallLeft = new StaticBody(world, 1, HEIGHT/2, 0.2f, HEIGHT);
-		wallRight = new StaticBody(world, WIDTH-1, HEIGHT/2, 0.2f, HEIGHT);
+		wallLeft = new StaticBody(world, 0.5f, HEIGHT/2, 0.2f, HEIGHT);
+		wallRight = new StaticBody(world, WIDTH-0.5f, HEIGHT/2, 0.2f, HEIGHT);
+		platform = new KinematicBody(world, WIDTH/2, 2, 2, 1);
 		for (int i = 0; i < 50; i++) {
-			balls.add(new DynamicBody(world, WIDTH/2+ MathUtils.random(-0.1f, 0.1f), HEIGHT*10+i, 0.4f));
+			balls.add(new DynamicBody(world, WIDTH/2+ MathUtils.random(-0.1f, 0.1f), HEIGHT*2+i, 0.4f));
 		}
 	}
 
 	@Override
 	public void render () {
+		platform.move();
 		ScreenUtils.clear(0, 0, 0, 1);
 		debugRenderer.render(world, camera.combined);
 		/*camera.update();

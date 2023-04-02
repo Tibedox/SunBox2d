@@ -13,6 +13,7 @@ public class StaticBody {
         bodyDef.position.set(new Vector2(x, y));
 
         Body body = world.createBody(bodyDef);
+
         PolygonShape box = new PolygonShape();
         box.setAsBox(width/2, height/2);
         body.createFixture(box, 0.0f);
