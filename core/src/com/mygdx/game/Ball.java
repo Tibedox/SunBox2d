@@ -11,7 +11,7 @@ public class Ball {
     Ball(World world, float x, float y, float radius){
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(x, y);
+        bodyDef.position.set(x, y);//
 
         Body body = world.createBody(bodyDef);
 
