@@ -27,10 +27,10 @@ public class KinematicBody {
     }
 
     void move() {
-        if(body.getPosition().x < 0){
+        if(body.getPosition().x < 1){
             body.setLinearVelocity(1, 0);
         }
-        if(body.getPosition().x > WIDTH){
+        if(body.getPosition().x > WIDTH-1){
             body.setLinearVelocity(-1, 0);
         }
     }
